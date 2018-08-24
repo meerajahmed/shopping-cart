@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = () => {
   return {
     "mode": "development",
-    "entry": "./src/index.js",
+    "entry": ["babel-polyfill", "./src/index.js"],
     "output": {
       "path": path.join(__dirname, '/dist'),
       "filename": "[name].[chunkhash:8].js"
@@ -27,6 +27,7 @@ module.exports = () => {
                 "react"
               ],
               "plugins": [
+                "transform-regenerator",
                 "transform-class-properties",
                 "transform-object-rest-spread"
               ]
