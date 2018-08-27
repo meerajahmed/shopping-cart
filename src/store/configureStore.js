@@ -5,7 +5,7 @@ import createSagaMiddleware from 'redux-saga';
 import rootReducer from '../reducers';
 import rootSaga from '../sagas';
 
-export default (defaultState) => {
+export default () => {
   const sagaMiddleware = createSagaMiddleware();
   const middleware = [sagaMiddleware];
   // create a store enhancer
@@ -13,7 +13,7 @@ export default (defaultState) => {
   const enhancers = [middlewareEnhancer];
   // compose enhancers into one function
   const composedEnhancers = composeWithDevTools(...enhancers);
-  const store = createStore(rootReducer, defaultState, composedEnhancers);
+  const store = createStore(rootReducer, composedEnhancers);
   sagaMiddleware.run(rootSaga);
   return store;
 };
