@@ -11,7 +11,8 @@ module.exports = () => {
       "filename": "[name].[chunkhash:8].js"
     },
     devServer: {
-      contentBase: path.join(__dirname, "dist")
+      contentBase: path.join(__dirname, "dist"),
+      historyApiFallback: true
     },
     "devtool": "source-map",
     "module": {
