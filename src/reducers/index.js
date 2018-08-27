@@ -1,16 +1,9 @@
-import {INCREMENT} from "../actions/increment";
-import {DECREMENT} from "../actions/decrement";
+import {combineReducers} from 'redux';
 
-export default (state, {type}) => {
+import authReducer from './auth';
+import filtersReducer from './filters';
 
-  switch (type) {
-    case INCREMENT:
-      return state + 1;
-
-    case DECREMENT:
-      return state - 1;
-
-    default:
-      return state;
-  }
-}
+export default combineReducers({
+  auth: authReducer,
+  filters: filtersReducer
+})
