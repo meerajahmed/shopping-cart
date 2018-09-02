@@ -1,7 +1,20 @@
-import {fork, takeEvery} from 'redux-saga/effects';
-import {INCREMENT_ASYNC} from "../actions/incrementAsync";
-import increaseAsync from "./increaseAsync";
+import {fork, all} from 'redux-saga/effects';
+import userSaga from "./userSaga";
+import signUpSaga from "./signUpSaga";
+import loginSaga from "./loginSaga";
+import logoutSaga from "./logoutSaga";
+import booksSaga from "./booksSaga";
+import searchSaga from "./searchSaga";
+import cartSaga from "./cartSaga";
 
 export default function* rootSaga() {
-  yield takeEvery(INCREMENT_ASYNC, increaseAsync);
+  yield all([
+    fork(userSaga),
+    fork(signUpSaga),
+    fork(loginSaga),
+    fork(logoutSaga),
+    fork(booksSaga),
+    fork(searchSaga),
+    fork(cartSaga)
+  ]);
 }
