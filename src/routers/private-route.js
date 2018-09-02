@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import Header from '../components/Header';
+import Header from '../containers/header';
 
 export const PrivateRoute = ({
   isAuthenticated,
@@ -12,7 +12,9 @@ export const PrivateRoute = ({
       isAuthenticated ? (
         <div>
           <Header />
-          <Component {...props} />
+          <div className="container">
+            <Component {...props} />
+          </div>
         </div>
       ) : (
           <Redirect to="/" />
@@ -21,7 +23,7 @@ export const PrivateRoute = ({
   );
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: !!state.auth.uid
+  isAuthenticated: !!state.auth.token
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

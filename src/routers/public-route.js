@@ -11,13 +11,15 @@ export const PublicRoute = ({
       isAuthenticated ? (
         <Redirect to="/dashboard" />
       ) : (
+        <div className="container">
           <Component {...props} />
+        </div>
         )
     )} />
   );
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: !!state.auth.uid
+  isAuthenticated: !!state.auth.token
 });
 
 export default connect(mapStateToProps)(PublicRoute);
