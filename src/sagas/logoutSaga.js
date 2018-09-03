@@ -1,19 +1,22 @@
-import { take, put, call, actionChannel } from 'redux-saga/effects'
+import { take, put, call, select, actionChannel } from 'redux-saga/effects'
 
+import {LOGOUT, removeAuthToken} from "../actions/auth";
+import logoutAPI from "../api/logoutAPI";
+import {getAuthToken} from "../selectors/auth";
+import {removeUserInfo} from "../actions/user";
+import {removeCartItems} from "../actions/cart";
 
-import setCurrentUserInfo from "../actions/setCurrentUserInfo";
-import {LOGIN, setAuthToken} from "../actions/auth";
-import loginAPI from "../api/loginAPI";
-
-export default function* currentUserSaga() {
-  const loginChannel = yield actionChannel(LOGIN);
+export default function* logoutSaga() {
+  const logoutChannel = yield actionChannel(LOGOUT);
   while (true) {
     try{
-      const {payload: {user}} = yield take(loginChannel);
-      const {data, headers} = yield call(loginAPI, user);
-      yield put(setAuthToken(headers['x-auth']));
-      sessionStorage.setItem('authToken',headers['x-auth']);
-      yield put(setCurrentUserInfo(data));
+      yield take(logoutChannel);
+      const authToken = yield select(getAuthToken);
+      yield call(logoutAPI, authToken);
+      sessionStorage.removeItem('authToken');
+      yield put(removeAuthToken());
+      yield put(removeUserInfo());
+      yield put(removeCartItems());
     } catch(error) {
       console.log(error);
     }
