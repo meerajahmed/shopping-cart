@@ -1,17 +1,21 @@
-import { take, put, call  } from 'redux-saga/effects'
+import { take, put, call, actionChannel } from 'redux-saga/effects'
 
-import {GET_CURRENT_USER_INFO} from "../actions/getCurrentUserInfo";
-import getUserInfoAPI from "../api/getUserInfoAPI";
-import setCurrentUserInfo from "../actions/setCurrentUserInfo";
-import {setAuthToken} from "../actions/auth";
+import signUpAPI from "../api/signUpAPI";
+import {setAuthToken, SIGN_UP} from "../actions/auth";
+import {setUserInfo} from "../actions/user";
 
-export default function* currentUserSaga() {
-  yield take(GET_CURRENT_USER_INFO);
-  const authToken = sessionStorage.getItem('authToken');
-  if(authToken) {
-    const data = yield call(getUserInfoAPI, authToken);
-    yield put(setAuthToken(authToken));
-    yield put(setCurrentUserInfo(data));
+export default function* signUpSaga() {
+  const signUpChannel = yield actionChannel(SIGN_UP);
+  while (true) {
+    try{
+      const {payload: {user}} = yield take(signUpChannel);
+      const {data, headers} = yield call(signUpAPI, user);
+      yield put(setAuthToken(headers['x-auth']));
+      sessionStorage.setItem('authToken',headers['x-auth']);
+      yield put(setUserInfo(data));
+    } catch(error) {
+      console.log(error);
+    }
   }
 }
 
