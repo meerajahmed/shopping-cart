@@ -1,6 +1,6 @@
 import { take, put, call, actionChannel } from 'redux-saga/effects'
 
-import getUserInfoAPI from "../api/getUserInfoAPI";
+import userInfoAPI from "../api/userInfoAPI";
 import {setAuthToken} from "../actions/auth";
 import {GET_USER_INFO, setUserInfo} from "../actions/user";
 
@@ -11,7 +11,7 @@ export default function* userSaga() {
     try{
       const authToken = sessionStorage.getItem('authToken');
       if(authToken) {
-        const data = yield call(getUserInfoAPI, authToken);
+        const data = yield call(userInfoAPI, authToken);
         yield put(setAuthToken(authToken));
         yield put(setUserInfo(data));
       }
