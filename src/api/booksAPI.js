@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-export default (authToken) =>
-  axios.get('http://localhost:3000/users/me', {
+export default () =>
+  axios.get('http://localhost:3000/books', {
     headers: {
-      'Content-Type': 'application/json',
-      'x-auth': authToken
+      'Content-Type': 'application/json'
     }
   }).then(response => response.data)
     .catch(err => {
