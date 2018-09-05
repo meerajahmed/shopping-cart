@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-export default (user) =>
-  axios.post('http://localhost:3000/users/login',
-    {...user},
-    {headers: {'Content-Type': 'application/json'}})
-    .then((response) => response)
+export default (authToken) =>
+  axios.delete('http://localhost:3000/users/me/token', {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-auth': authToken
+    }
+  }).then((response) => response)
     .catch(err => {
       throw err;
     });
