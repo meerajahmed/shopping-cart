@@ -1,42 +1,26 @@
 import React from 'react';
+import numeral from 'numeral';
 
-export const TASK_NOT_STARTED = 'TASK.NOT_STARTED';
-export const TASK_IN_PROGRESS = 'TASK.IN_PROGRESS';
-export const TASK_COMPLETED = 'TASK.COMPLETED';
-
-const Task = (props) => {
-
-  let cardBorderStyle;
-
-  switch (props.task.status) {
-    case TASK_IN_PROGRESS:
-      cardBorderStyle = 'primary';
-      break;
-    case TASK_COMPLETED:
-      cardBorderStyle = 'success';
-      break;
-    default:
-      cardBorderStyle = 'secondary';
-  }
-
+const Book = (props) => {
   return (
-    <div className="col-sm-4">
-      <div className={`card border-${cardBorderStyle} mb-3`}>
-        <div className={`card-header bg-transparent border-${cardBorderStyle}`}>{props.task.title}</div>
-        <div className={`card-body text-${cardBorderStyle}`}>
-          <p className="card-text">{props.task.description}</p>
+    <div className="col-md-4 col-lg-6">
+      <div className="card text-center shadow mb-5 rounded">
+        <img className="card-img-top" src={props.book.imagePath} alt={props.book.subtitle} />
+        <div className="card-body text-primary">
+          <h5 className="card-title">{props.book.title}</h5>
+          <p className="card-text">{props.book.subtitle}</p>
         </div>
-        <div className={`card-footer bg-transparent border-${cardBorderStyle}`}>
-          <select value={props.task.status} className="form-control"
-                  onChange={(event) => props.handleStatusChange(props.task.id, event.target.value)}>
-            <option value={TASK_NOT_STARTED}>Not Started</option>
-            <option value={TASK_IN_PROGRESS}>In Progress</option>
-            <option value={TASK_COMPLETED}>Completed</option>
-          </select>
+        <div className="mb-4 mx-3 pt-3 border-top">
+          <p className="text-primary">{numeral(props.book.price).format('$0,0.00')}</p>
+          <button
+            className="btn btn-primary"
+            onClick={() => props.handleAddToCart(props.book)}>
+            Add to cart
+          </button>
         </div>
       </div>
     </div>
-  );
+  )
 };
 
-export default Task;
+export default Book;
