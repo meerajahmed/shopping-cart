@@ -1,34 +1,21 @@
 import React, {Component} from 'react';
-import Books from "./books";
-import SearchBar from "./search-bar";
-import Categories from "./categories";
+import CartItem from "./cart-tem";
+import CartSummary from "../containers/cart-summary";
 
-export default class Dashboard extends Component {
-
-  componentDidMount() {
-    this.props.getBooks();
-  }
-
+export default class CartDetails extends Component {
   render() {
+    const cartItems = this.props.cartItems.map((cartItem) =>
+      <CartItem
+        key={cartItem._id}
+        cartItem={cartItem}
+        handleQtyChange={this.props.handleQtyChange}
+        handleRemoveFromCart={this.props.handleRemoveFromCart}/>
+    );
     return (
-        <div className="row my-5">
-          <div className="col-lg-4">
-            <SearchBar
-              searchText={this.props.searchText}
-              handleSearchInputChange={this.props.handleSearchInputChange} />
-            <Categories
-              books={this.props.books}
-              searchCategory={this.props.searchCategory}
-            />
-          </div>
-          <div className="col-lg-8">
-            <Books
-              books={this.props.books}
-              searchText={this.props.searchText}
-              handleAddToCart={this.props.handleAddToCart}
-            />
-          </div>
-        </div>
+      <div className="mt-5">
+        <CartSummary />
+        {cartItems}
+      </div>
     );
   }
 }

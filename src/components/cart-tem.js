@@ -15,7 +15,7 @@ const CartItem = (props) => {
               <div className="col-lg-4">
                 <h5 className="card-title">{props.cartItem.book.title}</h5>
                 <p className="card-text">{props.cartItem.book.subtitle}</p>
-                <h4 className="mt-4">Price: {numeral(props.cartItem.book.price).format('$0,0.00')}</h4>
+                <h5 className="mt-4">Price: {numeral(props.cartItem.book.price).format('$0,0.00')}</h5>
               </div>
               <div className="col-lg-4">
                 <div className="form-group">
@@ -30,9 +30,9 @@ const CartItem = (props) => {
                     <option value={5}>5</option>
                   </select>
                 </div>
-                <h4 className="mt-3">Total: {getTotal(props.cartItem.book.price, props.cartItem.quantity)}</h4>
+                <h5 className="mt-3">Total: {getTotal(props.cartItem.book.price, props.cartItem.quantity)}</h5>
                 <button
-                  className="btn btn-secondary"
+                  className="btn btn-outline-primary"
                   onClick={() => props.handleRemoveFromCart(props.cartItem._id)}>
                   Remove from Cart
                 </button>
