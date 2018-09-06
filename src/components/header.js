@@ -1,18 +1,33 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { logout } from '../actions/auth';
+import {NavLink, Link} from 'react-router-dom';
 
-export const Header = ({ startLogout }) => (
-  <header>
-    <h1>Shopping Cart</h1>
-    <NavLink to="/dashboard" activeClassName="is-active">Dashboard</NavLink>
-    <button onClick={startLogout}>Logout</button>
+const Header = ({userName, startLogout, cartItemsCount}) => (
+  <header className="sticky-top">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+      <Link to="/dashboard" className="navbar-brand">Book Store</Link>
+      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+              aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span className="navbar-toggler-icon"></span>
+      </button>
+      <div className="collapse navbar-collapse" id="navbarText">
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item active">
+            <NavLink to="/dashboard" className="nav-link" activeClassName="is-active">Dashboard</NavLink>
+          </li>
+          <li className="nav-item active">
+            <NavLink to="/cart" className="nav-link" activeClassName="is-active">Cart</NavLink>
+          </li>
+        </ul>
+        <span className="navbar-text mr-3 text-light">Welcome {userName}</span>
+        {cartItemsCount > 0 && (
+          <Link to="/cart" className="btn btn-outline-light mr-3">
+            Cart <span className="badge badge-light">{cartItemsCount}</span>
+          </Link>
+        )}
+        <button className="btn btn-outline-light my-2 my-sm-0" onClick={startLogout}>Logout</button>
+      </div>
+    </nav>
   </header>
 );
 
-const mapDispatchToProps = (dispatch) => ({
-  startLogout: () => dispatch(logout())
-});
-
-export default connect(undefined, mapDispatchToProps)(Header);
+export default Header;
