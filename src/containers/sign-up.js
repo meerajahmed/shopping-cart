@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
-import signUp from "../components/sign-up";
-import increment from "../actions/signUp";
+import SignUp from "../components/sign-up";
+import {signUp} from "../actions/auth";
 
 const mapDispatchToProps = (dispatch) => ({
   handleSubmit: (user) => dispatch(signUp(user))
