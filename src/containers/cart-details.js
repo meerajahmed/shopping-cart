@@ -1,26 +1,21 @@
 import {connect} from "react-redux";
-import Dashboard from "../components/dashboard";
-import {selectBooks} from "../selectors/books";
-import {getBooks} from "../actions/books";
-import {searchInputChange} from "../actions/search";
-import {getSearchCategory, getSearchText} from "../selectors/search";
-import {addToCart} from "../actions/cart";
+import {removeFromCart, updateCartItem} from "../actions/cart";
+import CartDetails from "../components/cart-details";
+import {selectAllCartItems} from "../selectors/cart";
+import {selectBook} from "../selectors/books";
 
 const mapStateToProps = (state) => {
-  const searchText = getSearchText(state);
-  const searchCategory = getSearchCategory(state);
-  const books = selectBooks(state, searchText, searchCategory);
-  return {
-    searchText,
-    searchCategory,
-    books
-  }
+  let cartItems = selectAllCartItems(state);
+  cartItems = cartItems.map((cartItem) => ({
+    ...cartItem,
+    book: selectBook(state, cartItem.bookId)
+  }));
+  return {cartItems};
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getBooks: () => dispatch(getBooks()),
-  handleSearchInputChange: (searchText) => dispatch(searchInputChange(searchText)),
-  handleAddToCart: (book) => dispatch(addToCart(book))
+  handleQtyChange: (cartId, quantity) => dispatch(updateCartItem(cartId, quantity)),
+  handleRemoveFromCart: (cartId) => dispatch(removeFromCart(cartId))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(CartDetails);
