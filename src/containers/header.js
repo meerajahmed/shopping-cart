@@ -1,9 +1,17 @@
 import {connect} from "react-redux";
-import Login from "../components/login";
-import {login} from "../actions/auth";
+import Header from "../components/header";
+import {logout} from "../actions/auth";
+import {getUserName} from "../selectors/user";
+import {cartItemsCount} from "../selectors/cart";
+
+const mapStateToProps = (state) =>
+  ({
+    userName: getUserName(state),
+    cartItemsCount: cartItemsCount(state)
+  });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSubmit: (data) => dispatch(login(data))
+  startLogout: () => dispatch(logout())
 });
 
-export default connect(undefined, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
