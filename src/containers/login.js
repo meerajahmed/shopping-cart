@@ -1,9 +1,9 @@
 import {connect} from "react-redux";
-import SignUp from "../components/sign-up";
-import {signUp} from "../actions/auth";
+import Login from "../components/login";
+import {login} from "../actions/auth";
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSubmit: (user) => dispatch(signUp(user))
+  handleSubmit: (data) => dispatch(login(data))
 });
 
-export default connect(undefined, mapDispatchToProps)(SignUp);
+export default connect(undefined, mapDispatchToProps)(Login);
