@@ -1,9 +1,15 @@
 import {combineReducers} from 'redux';
 
 import authReducer from './auth';
-import filtersReducer from './filters';
+import userReducer from './user';
+import booksReducer from './books';
+import searchReducer from './search';
+import cartReducer from './cart';
 
 export default combineReducers({
   auth: authReducer,
-  filters: filtersReducer
+  user: userReducer,
+  books: booksReducer,
+  search: searchReducer,
+  cart: cartReducer
 })
