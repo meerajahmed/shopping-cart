@@ -1,16 +1,10 @@
-import {SET_USER_INFO, REMOVE_USER_INFO} from "../actions/user";
+import {SET_BOOKS} from "../actions/books";
 
-export default (state = {}, {type, payload = {}}) => {
+export default (state = [], {type, payload}) => {
   switch (type) {
-    case SET_USER_INFO:
-      console.log(payload);
-      const {firstName, email} = payload;
-      return {
-        firstName,
-        email
-      };
-    case REMOVE_USER_INFO:
-      return {};
+    case SET_BOOKS:
+      const {books} = payload;
+      return [...books];
     default:
       return state;
   }
