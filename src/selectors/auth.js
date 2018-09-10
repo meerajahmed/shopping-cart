@@ -1,3 +1,2 @@
-/**
- * Created by meeahmed on 9/2/2018.
- */
+
+export const getAuthToken = state => state.auth.token;
