@@ -1,8 +1,14 @@
-export const selectAllBooks = ({books}) => books;
+import {selectBook} from "./books";
+import numeral from 'numeral';
 
-export const selectBooks = ({books}, searchText, searchCategory) => {
-  const text = searchText.toLowerCase();
-  return books.filter((book) => ((!searchCategory || book.category === searchCategory) &&
-  (!text || book.title.toLowerCase().indexOf(text) > -1)));
+export const cartItemsCount = ({cart}) => cart.length;
+
+export const cartTotal = function (state) {
+  const cartItems = selectAllCartItems(state);
+  return cartItems.map(({bookId, quantity}) => {
+    const {price} = selectBook(state, bookId);
+    return price * quantity;
+  }).reduce((acc, cur) => acc + cur, 0);
 };
 
+export const selectAllCartItems = ({cart}) => cart;
