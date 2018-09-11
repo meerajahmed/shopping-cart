@@ -1,3 +1,2 @@
-/**
- * Created by meeahmed on 9/2/2018.
- */
+
+export const getUserName = state => state.user.firstName;
