@@ -1,2 +1,4 @@
 
-export const getAuthToken = state => state.auth.token;
+export const getSearchText = state => state.search.searchText;
+
+export const getSearchCategory = state => state.search.searchCategory;
